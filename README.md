@@ -1,4 +1,4 @@
-# tube_clone
+# TubeClone
 
 YouTube clone
 

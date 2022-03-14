@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:tube_clone/Api.dart';
 
 class Inicio extends StatefulWidget {
   const Inicio({Key? key}) : super(key: key);
@@ -12,6 +13,10 @@ class Inicio extends StatefulWidget {
 class _InicioState extends State<Inicio> {
   @override
   Widget build(BuildContext context) {
+
+    Api api = Api();
+    api.pesquisar("");
+
     return Container(
       color: const Color.fromARGB(255, 255, 255, 255),
       child: const Center(

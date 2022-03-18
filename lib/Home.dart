@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tube_clone/CustomSearchDelegate.dart';
 import 'package:tube_clone/telas/Biblioteca.dart';
 import 'package:tube_clone/telas/EmAlta.dart';
 import 'package:tube_clone/telas/Inicio.dart';
@@ -13,48 +14,58 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   int _indice = 0;
+  String? _resultado = "";
 
   @override
   Widget build(BuildContext context) {
 
+
+
     List<Widget> telas = [
-      Inicio(),
       EmAlta(),
+      Inicio(_resultado!),
       Inscricao(),
       Biblioteca(),
     ];
     
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         iconTheme: const IconThemeData(
           color: Colors.grey
         ),
         elevation: 0,
         backgroundColor: Colors.white,
+        centerTitle: true,
         title: const Text(
-          "CLONETUBE",
+          "VINICCIOS13",
           style: TextStyle(
             color: Colors.red
           ),
         ),
         actions: <Widget>[
           IconButton(
-            onPressed: (){},
-            icon: const Icon(Icons.video_call_rounded),
-          ),
-          IconButton(
-            onPressed: (){},
+            onPressed: () async {
+              String? res = await showSearch(
+                  context: context,
+                  delegate: CustomSearchDelegate(),
+              );
+              setState(() {
+                _resultado = res;
+              });
+            },
             icon: const Icon(Icons.search),
           ),
-          IconButton(
-            onPressed: (){},
-            icon: const Icon(Icons.account_circle_outlined),
-          ),
         ],
+      ),*/
+      body: Container(
+        padding: EdgeInsets.only(left: 17, right: 17, top: 17),
+        child: telas[_indice],
+        color: Colors.white,
       ),
-      body: telas[_indice],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _indice,
+          //showSelectedLabels: false,
+          //showUnselectedLabels: false,
+          currentIndex: _indice,
           onTap: (indice) {
             setState(() {
               _indice = indice;
@@ -64,37 +75,44 @@ class _HomeState extends State<Home> {
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
           elevation: 0,
-          items: const [
-            BottomNavigationBarItem(
+          items: [
+            const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.video_library_rounded,
+              //color: Colors.grey,
+            ),
+            label: "Biblioteca",
+          ),
+            const BottomNavigationBarItem(
               backgroundColor: Colors.white,
-              icon: Icon(
-                Icons.home,
-                //color: Colors.grey,
+              icon:  Text(
+                "VINICCIOS13",
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 15
+                ),
               ),
               label: "Início",
             ),
             BottomNavigationBarItem(
+
               backgroundColor: Colors.white,
-              icon: Icon(
-                Icons.whatshot,
-                //color: Colors.grey,
+              icon: IconButton(
+                onPressed: () async {
+                  String? res = await showSearch(
+                    context: context,
+                    delegate: CustomSearchDelegate(),
+                  );
+                  setState(() {
+                    _resultado = res;
+                  });
+                },
+                icon: const Icon(Icons.search),
               ),
-              label: "Em alta",
+              label: "Vídeos",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.subscriptions,
-                //color: Colors.grey,
-              ),
-              label: "Inscrições",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.video_library_rounded,
-                //color: Colors.grey,
-              ),
-              label: "Biblioteca",
-            ),
+
+
           ]
       ),
     );
